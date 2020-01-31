@@ -13,7 +13,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import TopRedditPosts from 'containers/TopRedditPosts';
 
-import 'app.css';
+import './app.css';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
