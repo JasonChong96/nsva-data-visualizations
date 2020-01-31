@@ -28,13 +28,11 @@ function* testSaga() {
 jest.mock('../sagaInjectors');
 describe('injectSaga decorator', () => {
   let store: InjectedStore;
-  let injectors: /*typeof getInjectors*/ any;
-  let ComponentWithSaga;
+  let injectors/*: ReturnType<typeof getInjectors>*/;
+  let ComponentWithSaga/*: ComponentType<unknown>*/;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<
-      typeof getInjectors
-    >; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
     mockedGetInjectors.mockImplementation(() => injectors);
   });
 
@@ -98,7 +96,6 @@ describe('injectSaga decorator', () => {
       </Provider>,
     )
       .getInstance()!;
-
     const {
       props: { children },
     } = renderedComponent;
@@ -107,15 +104,14 @@ describe('injectSaga decorator', () => {
 });
 
 describe('useInjectSaga hook', () => {
-  let store;
+  let store: InjectedStore;
   let injectors;
   let ComponentWithSaga;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<
-      typeof getInjectors
-    >; // compiler doesn't know that it's mocked. So manually cast it.
-    mockedGetInjectors.mockImplementation(() => injectors);  });
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
+    mockedGetInjectors.mockImplementation(() => injectors);
+  });
 
   beforeEach(() => {
     store = configureStore({}, memoryHistory);

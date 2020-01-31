@@ -3,15 +3,17 @@
  */
 
 import identity from 'lodash/identity';
+import history from '../../utils/history';
 
 import configureStore from '../../configureStore';
 
 import { getInjectors, injectReducerFactory } from '../reducerInjectors';
-import history from '../history';
+import { InjectedStore } from '../../types';
+import { AnyAction, Reducer } from 'redux';
 
 const initialState = { reduced: 'soon' };
 
-const reducer = (state = initialState, action) => {
+const reducer: Reducer<object, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case 'TEST':
       return { ...state, reduced: action.payload };
@@ -21,8 +23,8 @@ const reducer = (state = initialState, action) => {
 };
 
 describe('reducer injectors', () => {
-  let store;
-  let injectReducer;
+  let store: InjectedStore;
+  let injectReducer: ReturnType<typeof injectReducerFactory>;
 
   describe('getInjectors', () => {
     beforeEach(() => {
@@ -53,7 +55,6 @@ describe('reducer injectors', () => {
     it('should check a store if the second argument is falsy', () => {
       const inject = injectReducerFactory({} as any);
 
-      // @ts-ignore
       expect(() => inject('test', reducer)).toThrow();
     });
 
@@ -65,7 +66,9 @@ describe('reducer injectors', () => {
 
     it('should validate a reducer and reducer`s key', () => {
       expect(() => injectReducer('', reducer)).toThrow();
+      // @ts-ignore
       expect(() => injectReducer(1, reducer)).toThrow();
+      // @ts-ignore
       expect(() => injectReducer(1, 1)).toThrow();
     });
 

@@ -3,25 +3,22 @@
  */
 
 import checkStore from '../checkStore';
-import { InjectedStore } from '../../types';
-import { Action, Dispatch } from 'redux';
-
-const action: Action<number> = {
-  type: 10,
-};
-const disp: Dispatch<typeof action> = (param) => param;
-
 
 describe('checkStore', () => {
-  let store: Omit<InjectedStore, 'Symbol[Observable'>;
+  let store;
 
   beforeEach(() => {
     store = {
-      dispatch: disp,
-      subscribe: (listener) => () => {},
-      getState: () => {},
-      replaceReducer: () => {},
-      runSaga: () => {},
+      dispatch: () => {
+      },
+      subscribe: () => {
+      },
+      getState: () => {
+      },
+      replaceReducer: () => {
+      },
+      runSaga: () => {
+      },
       injectedReducers: {},
       injectedSagas: {},
     };

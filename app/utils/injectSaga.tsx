@@ -3,7 +3,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { useStore } from 'react-redux';
 
 import { getInjectors } from './sagaInjectors';
-import { InjectSagaParams, InjectedStore } from 'types';
+import { InjectedStore, InjectSagaParams } from 'types';
 
 /**
  * Dynamically injects a saga, passes component's props as saga arguments
@@ -24,13 +24,11 @@ export default function hocWithSaga<P>({ key, saga, mode }: InjectSagaParams) {
     // dont wanna give access to HOC. Child only
     class InjectSaga extends React.Component<P> {
       public static WrappedComponent = WrappedComponent;
-
-      // public static contextType = ReactReduxContext;
-      public injectors: ReturnType<typeof getInjectors>;
-
       public static displayName = `withSaga(${WrappedComponent.displayName ||
-        WrappedComponent.name ||
-        'Component'})`;
+      WrappedComponent.name ||
+      'Component'})`;
+      // public static contextType = ReactReduxContext;
+      public injectors: any;
 
       constructor(props: any, context: any) {
         super(props, context);
@@ -51,6 +49,7 @@ export default function hocWithSaga<P>({ key, saga, mode }: InjectSagaParams) {
 
     return hoistNonReactStatics(InjectSaga, WrappedComponent) as any;
   }
+
   return wrap;
 }
 

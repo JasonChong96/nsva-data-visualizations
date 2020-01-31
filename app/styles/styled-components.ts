@@ -21,9 +21,7 @@ const {
   createGlobalStyle,
   keyframes,
   ThemeProvider,
-} = styledComponents as styledComponents.ThemedStyledComponentsModule<
-  IThemeInterface
->;
+} = styledComponents as styledComponents.ThemedStyledComponentsModule<IThemeInterface>;
 
 export { css, createGlobalStyle, keyframes, ThemeProvider };
 export default styled;

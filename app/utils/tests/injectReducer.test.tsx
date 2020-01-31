@@ -11,11 +11,10 @@ import configureStore from '../../configureStore';
 import { getInjectors } from '../reducerInjectors';
 
 import { createMemoryHistory } from 'history';
+import { useInjectReducer } from '../injectReducer';
 
 const memoryHistory = createMemoryHistory();
 jest.mock('../reducerInjectors');
-
-import { useInjectReducer } from '../injectReducer';
 
 // Fixtures
 const Component = () => null;
@@ -30,9 +29,7 @@ describe('injectReducer decorator', () => {
   let injectors;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<
-      typeof getInjectors
-    >; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
     mockedGetInjectors.mockImplementation(() => injectors);
     injectReducer = require('../injectReducer').default;
   });
@@ -52,7 +49,7 @@ describe('injectReducer decorator', () => {
     renderer.create(
       // tslint:disable-next-line:jsx-wrap-multiline
       <Provider store={store}>
-        <ComponentWithReducer />
+        <ComponentWithReducer/>
       </Provider>,
     );
 
@@ -75,7 +72,10 @@ describe('injectReducer decorator', () => {
         <ComponentWithReducer {...props} />
       </Provider>,
     )
-      .getInstance()!;
+      .getInstance();
+    if (!renderedComponent) {
+      throw new Error();
+    }
 
     const {
       props: { children },
@@ -94,9 +94,7 @@ describe('useInjectReducer hook', () => {
     injectors = {
       injectReducer: jest.fn(),
     };
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<
-      typeof getInjectors
-    >; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
     mockedGetInjectors.mockImplementation(() => injectors);
 
     store = configureStore({}, memoryHistory);
@@ -110,7 +108,7 @@ describe('useInjectReducer hook', () => {
     render(
       // tslint:disable-next-line: jsx-wrap-multiline
       <Provider store={store}>
-        <ComponentWithReducer />
+        <ComponentWithReducer/>
       </Provider>,
     );
 

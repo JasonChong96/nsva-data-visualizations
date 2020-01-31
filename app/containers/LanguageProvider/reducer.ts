@@ -4,7 +4,7 @@
  *
  */
 import ActionTypes from './constants';
-import { ContainerState, ContainerActions } from './types';
+import { ContainerActions, ContainerState } from './types';
 import { DEFAULT_LOCALE } from '../../i18n';
 
 export const initialState: ContainerState = {
@@ -24,4 +24,5 @@ function languageProviderReducer(
       return state;
   }
 }
+
 export default languageProviderReducer;

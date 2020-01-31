@@ -7,7 +7,6 @@
 
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
-
 // Import all the third party stuff
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -16,19 +15,15 @@ import { ConnectedRouter } from 'connected-react-router';
 import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
-
 // Import root app
 import App from 'containers/App';
-
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
-
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess';
 
 import configureStore from './configureStore';
-
 // Import i18n messages
 import { translationMessages } from 'i18n';
 
@@ -52,7 +47,7 @@ const render = (messages: any, Component = App) => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <Component />
+          <Component/>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
@@ -90,6 +85,26 @@ if (!(window as any).Intl) {
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed
+const runtime = require('offline-plugin/runtime');
 if (process.env.NODE_ENV === 'production') {
-  require('offline-plugin/runtime').install();
+  runtime.install(
+    {
+        onUpdating: () => {
+          console.log('SW Event:', 'onUpdating');
+        },
+        onUpdateReady: () => {
+          console.log('SW Event:', 'onUpdateReady');
+          // Tells to new SW to take control immediately
+          runtime.applyUpdate();
+        },
+        onUpdated: () => {
+          console.log('SW Event:', 'onUpdated');
+          // Reload the webpage to load into the new version
+          window.location.reload();
+        },
+        onUpdateFailed: () => {
+          console.log('SW Event:', 'onUpdateFailed');
+        }
+    }
+  );
 }

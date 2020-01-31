@@ -2,13 +2,14 @@
  * Create the store with dynamic reducers
  */
 
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, createStore } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-import { InjectedStore, ApplicationRootState } from 'types';
+import { ApplicationRootState, InjectedStore } from 'types';
 import { History } from 'history';
-import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 export default function configureStore(initialState: ApplicationRootState | {} = {}, history: History) {
   const reduxSagaMonitorOptions = {};
@@ -36,6 +37,7 @@ export default function configureStore(initialState: ApplicationRootState | {} =
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
 
+
   const store = createStore(
     createReducer(),
     initialState,
@@ -49,12 +51,11 @@ export default function configureStore(initialState: ApplicationRootState | {} =
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
+  if (module['hot']) {
+    module['hot'].accept('./reducers', () => {
       store.replaceReducer(createReducer(store.injectedReducers));
     });
   }
 
   return store;
 }
-

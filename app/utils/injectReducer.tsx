@@ -1,9 +1,9 @@
 import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { useStore, ReactReduxContext } from 'react-redux';
+import { useStore } from 'react-redux';
 
 import { getInjectors } from './reducerInjectors';
-import { InjectReducerParams, InjectedStore } from 'types';
+import { InjectedStore, InjectReducerParams } from 'types';
 
 /**
  * Dynamically injects a reducer
@@ -14,19 +14,18 @@ import { InjectReducerParams, InjectedStore } from 'types';
  */
 
 export default function hocWithReducer<P>({
-  key,
-  reducer,
-}: InjectReducerParams) {
+                                            key,
+                                            reducer,
+                                          }: InjectReducerParams) {
   function wrap(
     WrappedComponent: React.ComponentType<P>,
   ): React.ComponentType<P> {
     // dont wanna give access to HOC. Child only
     class ReducerInjector extends React.Component<P> {
-      public static contextType = ReactReduxContext;
       public static WrappedComponent = WrappedComponent;
       public static displayName = `withReducer(${WrappedComponent.displayName ||
-        WrappedComponent.name ||
-        'Component'})`;
+      WrappedComponent.name ||
+      'Component'})`;
 
       constructor(props: any, context: any) {
         super(props, context);
@@ -41,6 +40,7 @@ export default function hocWithReducer<P>({
 
     return hoistNonReactStatics(ReducerInjector, WrappedComponent) as any;
   }
+
   return wrap;
 }
 

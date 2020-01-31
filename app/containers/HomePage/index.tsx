@@ -1,114 +1,146 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- */
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import CameraIcon from '@material-ui/icons/PhotoCamera';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { CardActionArea } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Meaningless Copyright © '}
+      <Link to="/">
+        NSVA Data Visualizations
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-import { useInjectReducer } from 'utils/injectReducer';
-import { useInjectSaga } from 'utils/injectSaga';
-import { makeSelectError, makeSelectLoading, makeSelectRepos } from 'containers/App/selectors';
-import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
-import AtPrefix from './AtPrefix';
-import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
-import Section from './Section';
-import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+const useStyles = makeStyles(theme => ({
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+}));
 
-const key = 'home';
-
-const stateSelector = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
-});
+const cards = ['reddit'];
 
 export default function HomePage() {
-  const { repos, username, loading, error } = useSelector(stateSelector);
-
-  const dispatch = useDispatch();
-
-  // Not gonna declare event types here. No need. any is fine
-  const onChangeUsername = (evt: any) => dispatch(changeUsername(evt.target.value));
-  const onSubmitForm = (evt?: any) => {
-    if (evt !== undefined && evt.preventDefault) {
-      evt.preventDefault();
-    }
-    if (!username) {
-      return;
-    }
-    dispatch(loadRepos());
-  };
-
-  useInjectReducer({ key: key, reducer: reducer });
-  useInjectSaga({ key: key, saga: saga });
-
-  useEffect(() => {
-    // When initial state username is not null, submit the form to load repos
-    if (username && username.trim().length > 0) {
-      onSubmitForm();
-    }
-  }, []);
-
-  const reposListProps = {
-    loading: loading,
-    error: error,
-    repos: repos,
-  };
+  const classes = useStyles();
 
   return (
-    <article>
-      <Helmet>
-        <title>Home Page</title>
-        <meta
-          name="description"
-          content="A React.js Boilerplate application homepage"
-        />
-      </Helmet>
-      <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
-      </div>
-    </article>
+    <React.Fragment>
+      <CssBaseline/>
+      <AppBar position="relative">
+        <Toolbar>
+          <CameraIcon className={classes.icon}/>
+          <Typography variant="h6" color="inherit" noWrap>
+            NSVA Data Visualizations
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <main>
+        {/* Hero unit */}
+        <div className={classes.heroContent}>
+          <Container maxWidth="sm">
+            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+              NSVA Data Viz
+            </Typography>
+            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+              Not So Visually Appealing Data Visualizations which are mostly just me exploring frameworks. Some were
+              created for CS5346, Data Visualization.
+            </Typography>
+            {/*<div className={classes.heroButtons}>*/}
+            {/*  <Grid container spacing={2} justify="center">*/}
+            {/*    <Grid item>*/}
+            {/*      <Button variant="contained" color="primary">*/}
+            {/*        Main call to action*/}
+            {/*      </Button>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item>*/}
+            {/*      <Button variant="outlined" color="primary">*/}
+            {/*        Secondary action*/}
+            {/*      </Button>*/}
+            {/*    </Grid>*/}
+            {/*  </Grid>*/}
+            {/*</div>*/}
+          </Container>
+        </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            {cards.map(card => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <Link to={`/${card}`}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image="/images/reddit_viz_sample.png"
+                        title="Reddit Top 500 Posts Heatmap"
+                      />
+                      <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          Top Reddit Posts
+                        </Typography>
+                        <Typography>
+                          Visualizations exploring possible trends within the Top 500 Reddit posts
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Link>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </main>
+      {/* Footer */}
+      <footer className={classes.footer}>
+        <Typography variant="h6" align="center" gutterBottom>
+          More visualizations coming soon!
+        </Typography>
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+          Template taken from material-ui.com
+        </Typography>
+        <Copyright/>
+      </footer>
+      {/* End footer */}
+    </React.Fragment>
   );
 }
