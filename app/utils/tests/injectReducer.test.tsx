@@ -29,7 +29,7 @@ describe('injectReducer decorator', () => {
   let injectors;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>;
     mockedGetInjectors.mockImplementation(() => injectors);
     injectReducer = require('../injectReducer').default;
   });
@@ -94,7 +94,7 @@ describe('useInjectReducer hook', () => {
     injectors = {
       injectReducer: jest.fn(),
     };
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>;
     mockedGetInjectors.mockImplementation(() => injectors);
 
     store = configureStore({}, memoryHistory);

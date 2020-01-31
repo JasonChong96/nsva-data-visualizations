@@ -6,7 +6,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // 1. import default from the plugin module
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
@@ -51,7 +50,6 @@ module.exports = require('./webpack.base.babel')({
       exclude: /a\.js|node_modules/, // exclude node_modules
       failOnError: false, // show a warning when there is a circular dependency
     }),
-    new CopyWebpackPlugin([{ from: 'app/assets' }]),
   ],
 
   tsLoaders: [

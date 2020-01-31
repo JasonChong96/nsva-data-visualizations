@@ -8,9 +8,8 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-// import 'jest-dom/extend-expect'; // add some helpful assertions
-
 import TopRedditPostsBarChart from '../index';
+// import 'jest-dom/extend-expect'; // add some helpful assertions
 
 describe('<TopRedditPostsBarChart />', () => {
   it('Expect to not log errors in console', () => {
@@ -31,7 +30,7 @@ describe('<TopRedditPostsBarChart />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<TopRedditPostsBarChart data={[]} />);
+    } = render(<TopRedditPostsBarChart data={[]}/>);
     expect(firstChild).toMatchSnapshot();
   });
 });

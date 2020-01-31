@@ -8,9 +8,8 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-// import 'jest-dom/extend-expect'; // add some helpful assertions
-
 import TopRedditPostsScatterPlot from '../index';
+// import 'jest-dom/extend-expect'; // add some helpful assertions
 
 describe('<TopRedditPostsScatterPlot />', () => {
   it('Expect to not log errors in console', () => {

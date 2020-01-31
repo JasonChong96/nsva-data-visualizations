@@ -26,12 +26,12 @@ export default function App() {
   return (
     <div>
       <ThemeProvider theme={darkTheme}>
-      <Switch>
-        <Route exact path="/" component={HomePage}/>
-        <Route exact path="/reddit" component={TopRedditPosts}/>
-        <Route component={NotFoundPage}/>
-      </Switch>
-        </ ThemeProvider>
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/reddit" component={TopRedditPosts}/>
+          <Route component={NotFoundPage}/>
+        </Switch>
+      </ ThemeProvider>
     </div>
   );
 }

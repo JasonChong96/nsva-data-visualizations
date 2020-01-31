@@ -32,7 +32,7 @@ describe('injectSaga decorator', () => {
   let ComponentWithSaga/*: ComponentType<unknown>*/;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>;
     mockedGetInjectors.mockImplementation(() => injectors);
   });
 
@@ -109,7 +109,7 @@ describe('useInjectSaga hook', () => {
   let ComponentWithSaga;
 
   beforeAll(() => {
-    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>; // compiler doesn't know that it's mocked. So manually cast it.
+    const mockedGetInjectors = (getInjectors as unknown) as jest.Mock<typeof getInjectors>;
     mockedGetInjectors.mockImplementation(() => injectors);
   });
 

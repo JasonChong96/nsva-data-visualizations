@@ -31,29 +31,29 @@ interface Props {
 
 
 export interface HeatMapDataPoint {
-  dayOfWeek: number,
-  hourOfDay: number,
-  numPosts: number,
+  dayOfWeek: number;
+  hourOfDay: number;
+  numPosts: number;
 }
 
 export interface Post {
-  id: string,
-  title: string,
-  score: number,
-  times: number,
-  ratio: number,
-  comm: number,
-  auth: string,
-  subreddit: string,
-  links: string,
-  selftext: string,
-  hour: number,
-  day: number,
-  month: number,
-  year: number,
-  website: string,
-  subjectivity: number,
-  polarity: number,
+  id: string;
+  title: string;
+  score: number;
+  times: number;
+  ratio: number;
+  comm: number;
+  auth: string;
+  subreddit: string;
+  links: string;
+  selftext: string;
+  hour: number;
+  day: number;
+  month: number;
+  year: number;
+  website: string;
+  subjectivity: number;
+  polarity: number;
 }
 
 function TopRedditPosts(props: Props) {
@@ -92,178 +92,183 @@ function TopRedditPosts(props: Props) {
           });
         });
         // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
-        processedData.sort(function(a, b) {
-          return d3.ascending(a.hourOfDay, b.hourOfDay);
-        });
+        processedData.sort((a, b) => d3.ascending(a.hourOfDay, b.hourOfDay));
         setHourOfWeekData(processedData);
         setRawData(data);
       });
   }, []);
 
-  return <div>
-    <CssBaseline/>
+  return (
+    <div>
+      <CssBaseline/>
 
-    <AppBar position='relative'>
-      <Toolbar>
-        <Grid container spacing={1} alignItems='center'>
-          <Grid item>
-            <Link to='/'>
-              <IconButton>
-                <ArrowBackIosIcon style={{ color: 'lightgray' }}/>
-              </IconButton>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">
-              Top Reddit Posts Viz
-            </Typography>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
-    <Box padding='4em'>
-      <Grid container spacing={4} direction='column'>
-        <Grid item>
-          <Typography>
-            The following visualizations were generated using the dataset found <a
-            href='https://www.kaggle.com/nossair/top-500-reddit-posts-of-all-time' style={{ color: 'blue' }}>here</a>.
-          </Typography>
-          <br/>
-          <br/>
-          <Card>
-            <CardContent>
-              <Typography>
-                "Reddit . . ., is an American social news aggregation, web content rating, and discussion website . . .,
-                Reddit ranks as the No. 5 most visited website in the U.S. and No. 13 in the world, according to Alexa
-                Internet, with 55% of its user base coming from the United States, followed by the United Kingdom at
-                7.4%
-                and Canada at 5.8%."
+      <AppBar position="relative">
+        <Toolbar>
+          <Grid container spacing={1} alignItems="center">
+            <Grid item>
+              <Link to="/">
+                <IconButton>
+                  <ArrowBackIosIcon style={{ color: 'lightgray' }}/>
+                </IconButton>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                Top Reddit Posts Viz
               </Typography>
-              <br/>
-              <Typography>
-                - Wikipedia
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Box padding="4em">
+        <Grid container spacing={4} direction="column">
+          <Grid item>
+            <Typography>
+              The following visualizations were generated using the dataset found <a
+              href="https://www.kaggle.com/nossair/top-500-reddit-posts-of-all-time" style={{ color: 'blue' }}>here</a>.
+            </Typography>
+            <br/>
+            <br/>
+            <Card>
+              <CardContent>
+                <Typography>
+                  "Reddit . . ., is an American social news aggregation, web content rating, and discussion website . .
+                  .,
+                  Reddit ranks as the No. 5 most visited website in the U.S. and No. 13 in the world, according to Alexa
+                  Internet, with 55% of its user base coming from the United States, followed by the United Kingdom at
+                  7.4%
+                  and Canada at 5.8%."
+                </Typography>
+                <br/>
+                <Typography>
+                  - Wikipedia
+                </Typography>
+              </CardContent>
+            </Card>
+            <br/>
+            <br/>
+            <Typography>
+              It would hence be interesting to find out if there are any trends within the top 500 posts on such a
+              widely
+              used platform.
+            </Typography>
+            <br/>
+            <Typography>
+              The dataset contains details of the top 500 posts of all time on Reddit as of 27th January 2020. The
+              columns
+              relevant to this page are score (No. of upvotes), comm (No. of comments), hour, day, month and year.
+            </Typography>
+          </Grid>
+          <Grid container item direction="column" spacing={2}>
+            <Grid item>
+              <Typography variant="h3">
+                Exploratory
               </Typography>
-            </CardContent>
-          </Card>
-          <br/>
-          <br/>
-          <Typography>
-            It would hence be interesting to find out if there are any trends within the top 500 posts on such a widely
-            used platform.
-          </Typography>
-          <br/>
-          <Typography>
-            The dataset contains details of the top 500 posts of all time on Reddit as of 27th January 2020. The columns
-            relevant to this page are score (No. of upvotes), comm (No. of comments), hour, day, month and year.
-          </Typography>
-        </Grid>
-        <Grid container item direction='column' spacing={2}>
-          <Grid item>
-            <Typography variant='h3'>
-              Exploratory
-            </Typography>
-            <Typography variant='h5'>
-              Time of Week Heatmap
-            </Typography>
+              <Typography variant="h5">
+                Time of Week Heatmap
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                Are there more top 500 posts in certain times of the week?
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                To explore the possibility that the time of the week affects the number of top 500 posts, the following
+                heatmap is plotted:
+              </Typography>
+            </Grid>
+            <Grid item>
+              <TopRedditPostsHeatMap data={hourOfWeekData}/>
+            </Grid>
+            <Grid item>
+              <Typography>
+                The time of the day is encoded as the position on the x-axis, day of the week as the position on the
+                y-axis and the number of posts as the color.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                From the chart, it is clear that most posts in the top 500 are posted from 10:00 to 23:59 UTC. But it is
+                not clear if there are significantly more top 500 posts on certain days of the week.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5">
+                Scatter Plot, Number of Votes against Number of Comments
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                Is the number of votes correlated to the number of comments?
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                To explore the possibility that the number of votes affects the number of comments, a scatter plot is
+                drawn.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <TopRedditPostsScatterPlot data={rawData}/>
+            </Grid>
+            <Grid item>
+              <Typography>
+                Each dot represents a post and the number of votes is encoded as the position along the y-axis and the
+                number of comments as the position along the x-axis.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                One would expect that the more popular posts would have a higher number of comments but it does not seem
+                to be the case as shown in the graph. The regression line also does not seem to be a good fit (In fact
+                the
+                R-Squared value is only 0.025).
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography variant='h6'>
-              Are there more top 500 posts in certain times of the week?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              To explore the possibility that the time of the week affects the number of top 500 posts, the following
-              heatmap is plotted:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <TopRedditPostsHeatMap data={hourOfWeekData}/>
-          </Grid>
-          <Grid item>
-            <Typography>
-              The time of the day is encoded as the position on the x-axis, day of the week as the position on the
-              y-axis and the number of posts as the color.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              From the chart, it is clear that most posts in the top 500 are posted from 10:00 to 23:59 UTC. But it is
-              not clear if there are significantly more top 500 posts on certain days of the week.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant='h5'>
-              Scatter Plot, Number of Votes against Number of Comments
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant='h6'>
-              Is the number of votes correlated to the number of comments?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              To explore the possibility that the number of votes affects the number of comments, a scatter plot is
-              drawn.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <TopRedditPostsScatterPlot data={rawData}/>
-          </Grid>
-          <Grid item>
-            <Typography>
-              Each dot represents a post and the number of votes is encoded as the position along the y-axis and the
-              number of comments as the position along the x-axis.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              One would expect that the more popular posts would have a higher number of comments but it does not seem
-              to be the case as shown in the graph. The regression line also does not seem to be a good fit (In fact the
-              R-Squared value is only 0.025).
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container item direction='column' spacing={2}>
-          <Grid item>
-            <Typography variant='h3'>
-              Confirmatory
-            </Typography>
-            <Typography variant='h5'>
-              Bar Chart, Number of Top 500 Posts posted on each day of the week
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant='h6'>
-              Are there more top 500 posts in certain days of the week?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              To check if the day of the week affects the number of top 500 posts, the following
-              bar chart is plotted:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <TopRedditPostsBarChart data={hourOfWeekData}/>
-          </Grid>
-          <Grid item>
-            <Typography>
-              The day of the week is encoded as the position on the x-axis and total number of top 500 posts as the
-              height.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>
-              From the graph, there is no significant change in the number of top 500 posts made even as the day of the
-              week changes.
-            </Typography>
+          <Grid container item direction="column" spacing={2}>
+            <Grid item>
+              <Typography variant="h3">
+                Confirmatory
+              </Typography>
+              <Typography variant="h5">
+                Bar Chart, Number of Top 500 Posts posted on each day of the week
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6">
+                Are there more top 500 posts in certain days of the week?
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                To check if the day of the week affects the number of top 500 posts, the following
+                bar chart is plotted:
+              </Typography>
+            </Grid>
+            <Grid item>
+              <TopRedditPostsBarChart data={hourOfWeekData}/>
+            </Grid>
+            <Grid item>
+              <Typography>
+                The day of the week is encoded as the position on the x-axis and total number of top 500 posts as the
+                height.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>
+                From the graph, there is no significant change in the number of top 500 posts made even as the day of
+                the
+                week changes.
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Box>
-  </div>;
+      </Box>
+    </div>
+  );
 }
 
 export default memo(TopRedditPosts);

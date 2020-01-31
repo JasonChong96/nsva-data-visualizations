@@ -12,7 +12,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 // import styled from 'styles/styled-components';
 
 interface Props {
-  data: Post[],
+  data: Post[];
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -28,7 +28,7 @@ function TopRedditPostsScatterPlot({ data }: Props) {
   const ref = React.useRef(null);
   const classes = useStyles();
   React.useEffect(() => {
-    if (!ref.current || data.length == 0) {
+    if (!ref.current || data.length === 0) {
       return;
     }
 
@@ -89,19 +89,19 @@ function TopRedditPostsScatterPlot({ data }: Props) {
         .call(yAxis);
 
       target
-        .append("text")
-        .attr("fill", "#000")
-        .attr("x", "6rem")
-        .attr("y", "2rem")
-        .attr("class", 'MuiTypography-body1')
-        .attr("text-anchor", "end")
-        .text("No. of Votes");
+        .append('text')
+        .attr('fill', '#000')
+        .attr('x', '6rem')
+        .attr('y', '2rem')
+        .attr('class', 'MuiTypography-body1')
+        .attr('text-anchor', 'end')
+        .text('No. of Votes');
 
 
       target.append('text')
-        .attr('text-anchor', 'middle')  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("y", height - margin.bottom / 4)  // text is drawn off the screen top left, move down and out and rotate
-        .attr("x", (width) / 2)
+        .attr('text-anchor', 'middle')
+        .attr('y', height - margin.bottom / 4)
+        .attr('x', (width) / 2)
         .text('No. of Comments')
         .attr('class', 'MuiTypography-body1');
     };
