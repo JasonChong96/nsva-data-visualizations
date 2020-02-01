@@ -11,7 +11,18 @@ import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectTopRedditPosts from './selectors';
 import reducer from './reducer';
-import { AppBar, Box, Card, CardContent, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Table, TableBody, TableCell,
+  TableHead, TableRow,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TopRedditPostsHeatMap from 'components/TopRedditPostsHeatMap';
 import * as d3 from 'd3';
@@ -19,6 +30,9 @@ import TopRedditPostsBarChart from '../../components/TopRedditPostsBarChart';
 import TopRedditPostsScatterPlot from '../../components/TopRedditPostsScatterPlot';
 import { Link } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import TopRedditPostsHeatMapEncodingTable from '../../components/TopRedditPostsHeatMapEncodingTable';
+import TopRedditPostsScatterPlotEncodingTable from '../../components/TopRedditPostsScatterPlotEncodingTable';
+import TopRedditPostsBarChartEncodingTable from '../../components/TopRedditPostsBarChartEncodingTable';
 
 const key = 'topRedditPosts';
 
@@ -183,10 +197,7 @@ function TopRedditPosts(props: Props) {
               <TopRedditPostsHeatMap data={hourOfWeekData}/>
             </Grid>
             <Grid item>
-              <Typography>
-                The time of the day is encoded as the position on the x-axis, day of the week as the position on the
-                y-axis and the number of posts as the color.
-              </Typography>
+              <TopRedditPostsHeatMapEncodingTable />
             </Grid>
             <Grid item>
               <Typography>
@@ -214,10 +225,7 @@ function TopRedditPosts(props: Props) {
               <TopRedditPostsScatterPlot data={rawData}/>
             </Grid>
             <Grid item>
-              <Typography>
-                Each dot represents a post and the number of votes is encoded as the position along the y-axis and the
-                number of comments as the position along the x-axis.
-              </Typography>
+              <TopRedditPostsScatterPlotEncodingTable />
             </Grid>
             <Grid item>
               <Typography>
@@ -252,10 +260,7 @@ function TopRedditPosts(props: Props) {
               <TopRedditPostsBarChart data={hourOfWeekData}/>
             </Grid>
             <Grid item>
-              <Typography>
-                The day of the week is encoded as the position on the x-axis and total number of top 500 posts as the
-                height.
-              </Typography>
+              <TopRedditPostsBarChartEncodingTable />
             </Grid>
             <Grid item>
               <Typography>
